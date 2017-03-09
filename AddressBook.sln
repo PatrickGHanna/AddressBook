@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook", "AddressBook\AddressBook.csproj", "{6EA00B4B-1A7D-43AE-955F-3C0519440017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBookJsTests", "WebApplication1\AddressBookJsTests.csproj", "{A352FC5B-6086-4809-B6DF-27E7591F4861}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBookJsTests", "AddressBookJsTests\AddressBookJsTests.csproj", "{A352FC5B-6086-4809-B6DF-27E7591F4861}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
