@@ -207,7 +207,5 @@ C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\bin\ru-ru\JavaScriptEng
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\bin\ru-ru\JavaScriptEngineSwitcher.V8.resources.dll
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\bin\ru-ru\MsieJavaScriptEngine.resources.dll
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\obj\Debug\AddressBook.csprojResolveAssemblyReference.cache
-C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\obj\Debug\AddressBook.Properties.Resources.resources
-C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\obj\Debug\AddressBook.csproj.GenerateResource.Cache
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\obj\Debug\AddressBook.dll
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook\obj\Debug\AddressBook.pdb
