@@ -62,3 +62,6 @@ C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\bin\Debug\ru-ru\M
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\obj\Debug\AddressBook.Tests.csprojResolveAssemblyReference.cache
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\obj\Debug\AddressBook.Tests.dll
 C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\obj\Debug\AddressBook.Tests.pdb
+C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\bin\Debug\WebGrease.dll
+C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\bin\Debug\Antlr3.Runtime.dll
+C:\Users\phanna\PersonalProjects\AddressBook\AddressBook.Tests\bin\Debug\Antlr3.Runtime.pdb

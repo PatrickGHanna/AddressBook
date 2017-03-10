@@ -60,7 +60,7 @@ namespace AddressBook.Tests
         }
 
         [Test]
-        public void GetReturnsExpectedDataDict()
+        public void GetReturnsExpectedDataDictInAlphabeticalOrder()
         {
             var response = _controller.Get().ToArray();
 
@@ -68,7 +68,7 @@ namespace AddressBook.Tests
 
             for (var i = 0; i < response.Count(); i++)
             {
-                Assert.AreEqual(_data.Values.ToArray()[i], response[i]);
+                Assert.AreEqual(_data.Values.OrderBy(c => c.FirstName).ToArray()[i], response[i]);
             }
         }
 
@@ -83,13 +83,12 @@ namespace AddressBook.Tests
                 Phone = "123-456-7890",
                 Email = "TEST@Gmail.com"
             };
-            var expectedData = _data.Values.Concat(new[] {newContact}).ToArray()
-                ;
+            var expectedData = _data.Values.Concat(new[] {newContact}).OrderBy(c => c.FirstName).ToArray();
             var response = _controller.Post(newContact);
 
-            Assert.IsInstanceOf<OkNegotiatedContentResult<ICollection<Contact>>>(response);
+            Assert.IsInstanceOf<OkNegotiatedContentResult<List<Contact>>>(response);
 
-            var okResponse = response as OkNegotiatedContentResult<ICollection<Contact>>;
+            var okResponse = response as OkNegotiatedContentResult<List<Contact>>;
 
             // ReSharper disable once PossibleNullReferenceException
             var responseData = okResponse.Content.ToArray();
@@ -101,6 +100,122 @@ namespace AddressBook.Tests
                 Assert.AreEqual(expectedData[i], responseData[i]);
             }
         }
+
+        [Test]
+        public void PostWithoutPhoneAndEmailAddsAndReturnsExpectedDataDict()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "NEW",
+                LastName = "CONTACT",
+            };
+            var expectedData = _data.Values.Concat(new[] {newContact}).OrderBy(c => c.FirstName).ToArray();
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<OkNegotiatedContentResult<List<Contact>>>(response);
+
+            var okResponse = response as OkNegotiatedContentResult<List<Contact>>;
+
+            // ReSharper disable once PossibleNullReferenceException
+            var responseData = okResponse.Content.ToArray();
+
+            Assert.IsTrue(responseData.Length == expectedData.Length);
+
+            for (var i = 0; i < responseData.Length; i++)
+            {
+                Assert.AreEqual(expectedData[i], responseData[i]);
+            }
+        }
+
+        [Test]
+        public void PostWithEmptyFirstNameReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "",
+                LastName = "CONTACT",
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PostWithNullFirstNameReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = null,
+                LastName = "CONTACT",
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PostWithEmptyLastNameReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "NEW",
+                LastName = "",
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PostWithNullLastNameReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "NEW",
+                LastName = null,
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PostWithInvalidPhoneReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "NEW",
+                LastName = "CONTACT",
+                Phone = "not a phone number",
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PostWithInvalidEmailReturnsBadRequest()
+        {
+            var newContact = new Contact
+            {
+                Id = 0,
+                FirstName = "NEW",
+                LastName = "CONTACT",
+                Phone = "123-456-7890",
+                Email = "NOTANEMAIL"
+            };
+            var response = _controller.Post(newContact);
+
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        //TODO: Implement The error cases for put (putting off to try and get jasmine tests working)
 
         [Test]
         public void PutUpdatesContactAndReturnsExpectedDataDict()
@@ -119,8 +234,8 @@ namespace AddressBook.Tests
             Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
 
             var response = _controller.Put(keyToUpdate, updatedContact);
-            Assert.IsInstanceOf<OkNegotiatedContentResult<ICollection<Contact>>>(response);
-            var okResponse = response as OkNegotiatedContentResult<ICollection<Contact>>;
+            Assert.IsInstanceOf<OkNegotiatedContentResult<List<Contact>>>(response);
+            var okResponse = response as OkNegotiatedContentResult<List<Contact>>;
 
             // ReSharper disable once PossibleNullReferenceException
             var responseData = okResponse.Content.ToArray();
@@ -129,7 +244,7 @@ namespace AddressBook.Tests
 
             for (var i = 0; i < responseData.Length; i++)
             {
-                Assert.AreEqual(_data.Values.ToArray()[i], responseData[i]);
+                Assert.AreEqual(_data.Values.OrderBy(c => c.FirstName).ToArray()[i], responseData[i]);
             }
         }
 
@@ -142,8 +257,8 @@ namespace AddressBook.Tests
             var expectedData = _data.Where(c => c.Key != keyToRemove).Select(k => k.Value).ToArray();
 
             var response = _controller.Delete(keyToRemove);
-            Assert.IsInstanceOf<OkNegotiatedContentResult<ICollection<Contact>>>(response);
-            var okResponse = response as OkNegotiatedContentResult<ICollection<Contact>>;
+            Assert.IsInstanceOf<OkNegotiatedContentResult<List<Contact>>>(response);
+            var okResponse = response as OkNegotiatedContentResult<List<Contact>>;
 
             // ReSharper disable once PossibleNullReferenceException
             var responseData = okResponse.Content.ToArray();

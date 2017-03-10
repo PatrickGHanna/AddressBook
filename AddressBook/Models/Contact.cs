@@ -2,13 +2,18 @@
 
 // =====================================================
 // Under the MIT License (MIT)
+// Originally Comment.cs
 // Originally written by Jon Smith : GitHub JonPSmith, www.thereformedprogrammer.net
 // Modified for personal use by Patrick Hanna 2017/3/4
 // =====================================================
 
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
+using Microsoft.Ajax.Utilities;
 
 namespace AddressBook.Models
 {
@@ -20,7 +25,33 @@ namespace AddressBook.Models
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public string FullName => FirstName + " " + LastName;
+        public bool IsValid
+        {
+            get
+            {
+                var firstNameIsValid = !FirstName.IsNullOrWhiteSpace();
+                var lastNameIsValid = !LastName.IsNullOrWhiteSpace();
+                var phoneIsValid = Phone.IsNullOrWhiteSpace() ||
+                                   Regex.Match(Phone, @"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}").Success;
+                var emailIsValid = Email.IsNullOrWhiteSpace() || IsValidEmail(Email);
+
+                return firstNameIsValid && lastNameIsValid && phoneIsValid && emailIsValid;
+            }
+        }
+
+        private bool IsValidEmail(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
 
 
         public static IEnumerable<Contact> SeedData()
@@ -44,7 +75,6 @@ namespace AddressBook.Models
                     Phone = "801-555-0077",
                     Email = "Matt.Smith@gmail.com"
                 }
-                
             };
         }
     }

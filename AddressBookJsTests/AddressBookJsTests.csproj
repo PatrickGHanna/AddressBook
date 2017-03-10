@@ -179,7 +179,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tests\ContactBox-specs.js" />
+    <Content Include="Scripts\tests\ContactInputsSpec.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Jasmine\SpecRunner.cshtml" />
     <Content Include="Views\Web.config" />

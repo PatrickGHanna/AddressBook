@@ -19,6 +19,7 @@
                   firstName={this.props.firstName}
                   lastName={this.props.lastName}
                   phone={this.props.phone}
+                  email={this.props.email}
                   title={this.props.title}/>
                     : null}
                </span>;

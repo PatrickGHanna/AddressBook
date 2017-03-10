@@ -1,16 +1,16 @@
 ﻿var ContactInputs = React.createClass({
-    //todo: repeated form elements
+    //todo: repeated form elements, I would like to make an input component possibly, or at least a component per type
     render: function() {
         return (
             <div className="text-left">
                 <input className="hidden"
                        id="id"
                        type="hidden"
-                       placeholder="First Name"
                        value={this.props.id}/>
                 <div className="form-group">
-                    <label for="firstName">First Name</label>
-                    <input className="form-control"
+                    <label for="firstName">First Name *</label>
+                    <input required="required"
+                           className="form-control"
                            id="firstName"
                            type="text"
                            placeholder="First Name"
@@ -18,8 +18,9 @@
                            onChange={this.props.handleFirstNameChange}/>
                 </div>
                 <div className="form-group">
-                    <label for="firstName">Last Name</label>
-                    <input className="form-control"
+                    <label for="lastName">Last Name *</label>
+                    <input required="required"
+                           className="form-control"
                            id="lastName"
                            type="text"
                            placeholder="Last Name"
@@ -28,12 +29,22 @@
                 </div>
                 <div className="form-group">
                     <label for="phone">Phone Number</label>
-                    <input className="form-control"
+                    <input data-rule-phoneUS="true"
+                           className="form-control"
                            id="phone"
                            type="text"
                            placeholder="XXX-XXX-XXXX"
                            value={this.props.phone}
                            onChange={this.props.handlePhoneChange}/>
+                </div>
+                <div className="form-group">
+                    <label for="phone">Email</label>
+                    <input className="form-control"
+                           id="email"
+                           type="email"
+                           placeholder="JohnDoe@Example.com"
+                           value={this.props.email}
+                           onChange={this.props.handleEmailChange} />
                 </div>
             </div>
         );

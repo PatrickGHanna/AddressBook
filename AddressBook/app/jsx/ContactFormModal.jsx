@@ -1,10 +1,12 @@
 ﻿var ContactFormModal = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             id: this.props.id ? this.props.id : 0,
             firstName: this.props.firstName ? this.props.firstName : "",
             lastName: this.props.lastName ? this.props.lastName : "",
-            phone: this.props.phone ? this.props.phone : ""
+            phone: this.props.phone ? this.props.phone : "",
+            email: this.props.email ? this.props.email : ""
+
         };
     },
     //todo: these on change handlers are pretty much the same thing. can I refactor this?
@@ -17,24 +19,38 @@
     handlePhoneChange: function(e) {
         this.setState({ phone: e.target.value });
     },
+    handleEmailChange: function (e) {
+        this.setState({ email: e.target.value });
+    },
     componentDidMount() {
-        $(ReactDOM.findDOMNode(this)).modal('show');
-        $(ReactDOM.findDOMNode(this)).on('hidden.bs.modal', this.props.handleHideModal);
+        var componentDom = $(ReactDOM.findDOMNode(this));
+        componentDom.modal('show');
+        componentDom.on('hidden.bs.modal', this.props.handleHideModal);
+        componentDom.find('form').validate();
+    },
+    ensureAllInputsAreValid: function (inputs) {
+        var isValid = true;
+        inputs.each(function (index, input) {
+                if (!$(input).valid()) {
+                    isValid = false;
+                }
+        });
+        return isValid;
     },
     handleSubmit: function(e) {
         e.preventDefault();
-        debugger;
+        var inputs = $(e.target).find(':input');
+        if (!this.ensureAllInputsAreValid(inputs)) {
+            debugger;
+            return;
+        }
         var id = this.state.id;
         var firstName = this.state.firstName.trim();
         var lastName = this.state.lastName.trim();
-        //obviously need to do more with phone
         var phone = this.state.phone.trim();
+        var email = this.state.email.trim();
 
-        //validation
-        if (!lastName || !firstName) {
-            return;
-        }
-        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone });
+        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone, email: email });
         $(ReactDOM.findDOMNode(this)).modal('hide');
     },
     render() {
@@ -53,9 +69,11 @@
                                 <ContactInputs firstName={this.state.firstName}
                                                lastName={this.state.lastName}
                                                phone={this.state.phone}
+                                               email={this.state.email}
                                                handleFirstNameChange={this.handleFirstNameChange}
                                                handleLastNameChange={this.handleLastNameChange}
-                                               handlePhoneChange={this.handlePhoneChange}/>
+                                               handlePhoneChange={this.handlePhoneChange}
+                                               handleEmailChange={this.handleEmailChange}/>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-link" data-dismiss="modal">Close</button>

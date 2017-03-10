@@ -50,9 +50,10 @@
     },
     handleContactRemove: function(id) {
         var contacts = this.state.data;
-        var indexToRemove = contacts.map(function(contact) { return contact.id; }).indexOf(id);
-        var newContacts = contacts.splice(indexToRemove, 1);
-        this.setState({ data: newContacts });
+        var remainingContacts = contacts;
+        var indexToRemove = remainingContacts.map(function (contact) { return contact.id; }).indexOf(id);
+        remainingContacts.splice(indexToRemove, 1);
+        this.setState({ data: remainingContacts });
         $.ajax({
             url: this.props.url + '/' + id,
             dataType: 'json',

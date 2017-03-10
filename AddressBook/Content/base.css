@@ -55,4 +55,11 @@ h4 {
 p, ul {
   margin: 15px 0;
 }
+.error {
+    color: #cc0000;
+}
+
+input.error {
+    border-color:#cc0000;
+}
 

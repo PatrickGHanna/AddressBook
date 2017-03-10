@@ -15,6 +15,7 @@
                                              firstName={this.props.firstName}
                                              lastName={this.props.lastName}
                                              phone={this.props.phone}
+                                             email={this.props.email}
                                              action={this.props.handleContactEdit}
                                              text="Edit Contact"/>
                             <ActionButton action={this.handleContactRemove} text="Delete"/>
@@ -23,8 +24,13 @@
                 </div>
 
                 <div className="panel-body">
-
-                    {this.props.phone}
+                    <div>
+                        <b>Phone:</b> {!this.props.phone ? <span className="text-muted">None provided</span> : this.props.phone}
+                    </div>
+                    <hr/>
+                    <div>
+                        <b>Email:</b> {!this.props.email ? <span className="text-muted">None provided</span> : this.props.email}
+                    </div>
                 </div>
             </div>
         );
