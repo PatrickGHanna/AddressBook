@@ -28,13 +28,7 @@ namespace AddressBook
                       "~/Content/site.css"));
 
             bundles.Add(new BabelBundle("~/bundles/react").IncludeDirectory("~/app/jsx/","*jsx").Include("~/app/app.jsx"));
-                // Add your JSX files here
-                //"~/app/*.jsx"
-                //"~/app/ContactBox.jsx",
-                //"~/app/ContactList.jsx",
-                //"~/app/CommentForm.jsx",
-                //"~/app/app.jsx"
-                //));
+                
         }
     }
 }

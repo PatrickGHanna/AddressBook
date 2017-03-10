@@ -9,6 +9,9 @@ using AddressBook.Controllers;
 using AddressBook.Models;
 using NUnit.Framework;
 
+/// <summary>
+/// TODO: Test the non happy paths
+/// </summary>
 namespace AddressBook.Tests
 {
     [TestFixture]
@@ -47,11 +50,13 @@ namespace AddressBook.Tests
             };
             _data =
                 new ConcurrentDictionary<long, Contact>(list.ToDictionary(x => x.Id));
-            _controller = new ContactsController(_data)
+
+            _controller = new ContactsController()
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
             };
+            ContactsController.SetData(_data);
         }
 
         [Test]

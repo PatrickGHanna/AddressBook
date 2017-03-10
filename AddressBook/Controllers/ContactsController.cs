@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web.Http;
 using AddressBook.Models;
 
@@ -13,21 +14,12 @@ namespace AddressBook.Controllers
     public class ContactsController : ApiController
     {
         //static to keep its state between requests. we use a concurrent dictionary in case we have multiple instances of the app working on the data at a time
-        private static ConcurrentDictionary<long, Contact> _dataDict;
+        internal static ConcurrentDictionary<long, Contact> _dataDict =
+            new ConcurrentDictionary<long, Contact>(Contact.SeedData().ToDictionary(c => c.Id));
 
-
-        //This is really stupid, but until I can figure out how store the data dictionary in a way that doesnt get reset each request this solution works
-        public ContactsController()
+        internal static void SetData(ConcurrentDictionary<long, Contact> newData)
         {
-            if (_dataDict == null)
-                _dataDict =
-                    new ConcurrentDictionary<long, Contact>(Contact.SeedData().ToDictionary(x => x.Id));
-        }
-
-        //I hate this solution for unit testing, but until I can figure out how store the data dictionary in a way that doesnt get reset each request this solution works
-        public ContactsController(ConcurrentDictionary<long, Contact> seedDictionary)
-        {
-            _dataDict = seedDictionary;
+            _dataDict = newData;
         }
 
         // GET: api/Comments
