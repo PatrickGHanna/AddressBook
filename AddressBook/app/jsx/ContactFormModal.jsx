@@ -48,9 +48,10 @@
         var lastName = this.state.lastName.trim();
         var phone = this.state.phone.trim();
         var email = this.state.email.trim();
-
-        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone, email: email });
         $(ReactDOM.findDOMNode(this)).modal('hide');
+        this.props.handleHideModal();
+        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone, email: email });
+        
     },
     render() {
         return (

@@ -34,7 +34,8 @@
     handleContactEdit: function(contact) {
         var contacts = this.state.data;
         var newContacts = contacts;
-        newContacts[contact.id] = contact;
+        var indexToReplace = newContacts.map(function (origContact) { return origContact.id; }).indexOf(contact.id);
+        newContacts[indexToReplace] = contact;
         this.setState({ data: newContacts });
         $.ajax({
             url: this.props.url + '/' + contact.id,
