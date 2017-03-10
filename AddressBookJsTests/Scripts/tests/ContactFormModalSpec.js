@@ -7,8 +7,8 @@ describe("ContactFormModal",
         var expectedLastName = "Hanna";
         var expectedPhone = "952-334-9342";
         var expectedEmail = "Patrick.Gene.Hanna@gmail.com";
-        var action = function() { return false; };
-        var handleHideModal = function() {};
+        var action = jasmine.createSpy('action');
+        var handleHideModal = jasmine.createSpy('hideModal').and.callThrough();
         beforeEach(function() {
             component = React.createElement(
                 ContactFormModal,
@@ -75,7 +75,6 @@ describe("ContactFormModal",
             function() {
                 expect($(ReactDOM.findDOMNode(element)).find('#email')[0].value === expectedEmail).toBe(true);
             });
-
         it("should validate on submit",
             function() {
                 var spy = spyOn(element, "ensureAllInputsAreValid").and.callThrough();
@@ -83,4 +82,11 @@ describe("ContactFormModal",
                 testUtils.Simulate.submit($(ReactDOM.findDOMNode(element)).find('form')[0]);
                 expect(spy).toHaveBeenCalled();
             });
+        it("should call props.action on submit",
+            function () {
+                element.forceUpdate();
+                testUtils.Simulate.submit($(ReactDOM.findDOMNode(element)).find('form')[0]);
+                expect(action).toHaveBeenCalled();
+            });
+       
     })

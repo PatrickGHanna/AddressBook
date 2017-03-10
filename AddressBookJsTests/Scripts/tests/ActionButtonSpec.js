@@ -4,7 +4,7 @@ describe("ActionButton",
     function() {
         var component, element = null;
         var expectedText = "BUTTON TEXT";
-        var action = function() { return false; };
+        var action = jasmine.createSpy('action');
         beforeEach(function() {
             component = React.createElement(
                 ActionButton,
@@ -15,17 +15,15 @@ describe("ActionButton",
             element = testUtils.renderIntoDocument(component);
         });
 
-        it("should correctly populate the First Name field",
+        it("should correctly populate the button text",
             function() {
-                expect($(ReactDOM.findDOMNode(element)).find('#firstName')[0].value === expectedFirstName).toBe(true);
+                expect($(ReactDOM.findDOMNode(element)).text() === expectedText).toBe(true);
             });
 
-        it("should call handleLastNameChange on input field change",
+        it("should call Action on input field change",
             function() {
-                var spy = spyOn(element, "handleLastNameChange");
-                element.forceUpdate();
-                testUtils.Simulate.change($(ReactDOM.findDOMNode(element)).find('#lastName')[0]);
-                expect(spy).toHaveBeenCalled();
+                testUtils.Simulate.click($(ReactDOM.findDOMNode(element))[0]);
+                expect(action).toHaveBeenCalled();
             });
 
         
