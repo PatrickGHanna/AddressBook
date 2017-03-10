@@ -14,7 +14,8 @@
     },
     handleContactAdd: function(contact) {
         var contacts = this.state.data;
-        var newContacts = contacts.concat([contact]);
+        var newContacts = contacts;
+        newContacts[contact.id] = contact;
         this.setState({ data: newContacts });
         $.ajax({
             url: this.props.url,
@@ -32,7 +33,9 @@
     },
     handleContactEdit: function(contact) {
         var contacts = this.state.data;
-        var newContacts = contacts[contact.id] = contact;
+        var newContacts = contacts;
+        var indexToReplace = newContacts.map(function (origContact) { return origContact.id; }).indexOf(contact.id);
+        newContacts[indexToReplace] = contact;
         this.setState({ data: newContacts });
         $.ajax({
             url: this.props.url + '/' + contact.id,

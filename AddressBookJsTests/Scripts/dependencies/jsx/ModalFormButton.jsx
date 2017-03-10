@@ -1,6 +1,5 @@
 ﻿var ModalFormButton = React.createClass({
     getInitialState() {
-        debugger;
         return { view: { showModal: false } }
     },
     handleHideModal() {

@@ -29,18 +29,18 @@
         componentDom.find('form').validate();
     },
     ensureAllInputsAreValid: function (inputs) {
+        var returnValue = true;
         inputs.each(function (index, input) {
                 if (!$(input).valid()) {
-                    return false;
+                    returnValue = false;
                 }
         });
-        return true;
+        return returnValue;
     },
     handleSubmit: function(e) {
         e.preventDefault();
-        var inputs = $(e.target).find(':input');
+        var inputs = $(e.target).find(':input:not(:button)');
         if (!this.ensureAllInputsAreValid(inputs)) {
-            debugger;
             return;
         }
         var id = this.state.id;
@@ -48,9 +48,10 @@
         var lastName = this.state.lastName.trim();
         var phone = this.state.phone.trim();
         var email = this.state.email.trim();
-
-        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone, email: email });
         $(ReactDOM.findDOMNode(this)).modal('hide');
+        this.props.handleHideModal();
+        this.props.action({ id: id, firstName: firstName, lastName: lastName, phone: phone, email: email });
+        
     },
     render() {
         return (
