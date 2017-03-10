@@ -25,6 +25,7 @@ namespace AddressBook.Models
         public string Email { get; set; }
         public string Phone { get; set; }
 
+        //TODO: I would like to return some kind of basic response object that also contains a more detailed error message
         public bool IsValid
         {
             get

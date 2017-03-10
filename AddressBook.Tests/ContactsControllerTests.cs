@@ -192,7 +192,7 @@ namespace AddressBook.Tests
                 Id = 0,
                 FirstName = "NEW",
                 LastName = "CONTACT",
-                Phone = "not a phone number",
+                Phone = "NOTAPHONENUMBER",
             };
             var response = _controller.Post(newContact);
 
@@ -216,6 +216,116 @@ namespace AddressBook.Tests
         }
 
         //TODO: Implement The error cases for put (putting off to try and get jasmine tests working)
+
+        [Test]
+        public void PutWithEmptyFirstNameReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = "",
+                LastName = "CONTACT",
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PutWithNullFirstNameReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = null,
+                LastName = "CONTACT",
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PutWithEmptyLastNameReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = "NEW",
+                LastName = "",
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PutWithNullLastNameReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = "NEW",
+                LastName = null,
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+        [Test]
+        public void PutWithInvalidPhoneReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = "NEW",
+                LastName = null,
+                Phone = "NOTAPHONENUMBER"
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
+
+                 [Test]
+        public void PutWithInvalidEmailReturnsBadRequest()
+        {
+            var updatedContact = new Contact
+            {
+                FirstName = "NEW",
+                LastName = null,
+                Email = "NOTANEMAIL"
+            };
+            var keyToUpdate = _data.Keys.Last();
+            Contact origValue = null;
+            Assert.IsTrue(_data.TryGetValue(keyToUpdate, out origValue));
+            updatedContact.Id = origValue.Id;
+            Assert.IsTrue(_data.TryUpdate(keyToUpdate, updatedContact, origValue));
+
+            var response = _controller.Put(keyToUpdate, updatedContact);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+        }
 
         [Test]
         public void PutUpdatesContactAndReturnsExpectedDataDict()
