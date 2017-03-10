@@ -29,13 +29,12 @@
         componentDom.find('form').validate();
     },
     ensureAllInputsAreValid: function (inputs) {
-        var isValid = true;
         inputs.each(function (index, input) {
                 if (!$(input).valid()) {
-                    isValid = false;
+                    return false;
                 }
         });
-        return isValid;
+        return true;
     },
     handleSubmit: function(e) {
         e.preventDefault();

@@ -8,7 +8,7 @@
                        type="hidden"
                        value={this.props.id}/>
                 <div className="form-group">
-                    <label for="firstName">First Name *</label>
+                    <label htmlFor="firstName">First Name *</label>
                     <input required="required"
                            className="form-control"
                            id="firstName"
@@ -18,7 +18,7 @@
                            onChange={this.props.handleFirstNameChange}/>
                 </div>
                 <div className="form-group">
-                    <label for="lastName">Last Name *</label>
+                    <label htmlFor="lastName">Last Name *</label>
                     <input required="required"
                            className="form-control"
                            id="lastName"
@@ -28,7 +28,7 @@
                            onChange={this.props.handleLastNameChange}/>
                 </div>
                 <div className="form-group">
-                    <label for="phone">Phone Number</label>
+                    <label htmlFor="phone">Phone Number</label>
                     <input data-rule-phoneUS="true"
                            className="form-control"
                            id="phone"
@@ -38,7 +38,7 @@
                            onChange={this.props.handlePhoneChange}/>
                 </div>
                 <div className="form-group">
-                    <label for="phone">Email</label>
+                    <label htmlFor="phone">Email</label>
                     <input className="form-control"
                            id="email"
                            type="email"
