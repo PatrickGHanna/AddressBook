@@ -12,45 +12,56 @@ namespace AddressBook.Controllers
     [RoutePrefix("api/contacts")]
     public class ContactsController : ApiController
     {
-        private static readonly ConcurrentDictionary<long, Contact> DataDict =
-            new ConcurrentDictionary<long, Contact>(Contact.SeedData().ToDictionary(x => x.Id));
+        //static to keep its state between requests. we use a concurrent dictionary in case we have multiple instances of the app working on the data at a time
+        private static ConcurrentDictionary<long, Contact> _dataDict;
 
-        //obviously not a scalable solution, but since new id generation would usually be handled by the db I will use this as a filler
-        private long _newId = DataDict.IsEmpty ? 1 : DataDict.Last().Key;
 
+        //This is really stupid, but until I can figure out how store the data dictionary in a way that doesnt get reset each request this solution works
+        public ContactsController()
+        {
+            if (_dataDict == null)
+                _dataDict =
+                    new ConcurrentDictionary<long, Contact>(Contact.SeedData().ToDictionary(x => x.Id));
+        }
+
+        //I hate this solution for unit testing, but until I can figure out how store the data dictionary in a way that doesnt get reset each request this solution works
+        public ContactsController(ConcurrentDictionary<long, Contact> seedDictionary)
+        {
+            _dataDict = seedDictionary;
+        }
 
         // GET: api/Comments
         public IEnumerable<Contact> Get()
         {
-            return DataDict.Values;
+            return _dataDict.Values;
         }
 
         // GET: api/Comments/5
         public IHttpActionResult Get(long id)
         {
             Contact value = null;
-            return DataDict.TryGetValue(id, out value) ? (IHttpActionResult) Ok(value) : NotFound();
+            return _dataDict.TryGetValue(id, out value) ? (IHttpActionResult) Ok(value) : NotFound();
         }
 
         // POST: api/Comments
         public IHttpActionResult Post([FromBody] Contact value)
         {
             //stupid I know, but works for demo purposes
-            value.Id = ++_newId;
+            value.Id = _dataDict.IsEmpty ? 1 : _dataDict.Last().Key + 1;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (DataDict.TryAdd(value.Id, value))
-                return Ok(DataDict.Values);
+            if (_dataDict.TryAdd(value.Id, value))
+                return Ok(_dataDict.Values);
 
             return Conflict();
         }
 
         // PUT: api/Comments/5
-        public IHttpActionResult Put(int id, [FromBody] Contact value)
+        public IHttpActionResult Put(long id, [FromBody] Contact value)
         {
             if (!ModelState.IsValid)
             {
@@ -58,17 +69,17 @@ namespace AddressBook.Controllers
             }
 
             Contact origValue = null;
-            return DataDict.TryGetValue(id, out origValue) && DataDict.TryUpdate(value.Id, value, origValue)
-                ? (IHttpActionResult) Ok(DataDict.Values)
+            return _dataDict.TryGetValue(id, out origValue) && _dataDict.TryUpdate(value.Id, value, origValue)
+                ? (IHttpActionResult) Ok(_dataDict.Values)
                 : NotFound();
         }
 
         // DELETE: api/Comments/5
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(long id)
         {
             Contact value = null;
-            return DataDict.TryRemove(id, out value)
-                ? (IHttpActionResult) Ok(DataDict.Values)
+            return _dataDict.TryRemove(id, out value)
+                ? (IHttpActionResult) Ok(_dataDict.Values)
                 : NotFound();
         }
     }

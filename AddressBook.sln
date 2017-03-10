@@ -4,14 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72753524-F309-4AD0-BDBA-8003EF383417}"
-	ProjectSection(SolutionItems) = preProject
-		licence.txt = licence.txt
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook", "AddressBook\AddressBook.csproj", "{6EA00B4B-1A7D-43AE-955F-3C0519440017}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBookJsTests", "AddressBookJsTests\AddressBookJsTests.csproj", "{A352FC5B-6086-4809-B6DF-27E7591F4861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Tests", "AddressBook.Tests\AddressBook.Tests.csproj", "{7E894C3F-40DF-4275-BCEA-31AC0C381C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +25,10 @@ Global
 		{A352FC5B-6086-4809-B6DF-27E7591F4861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A352FC5B-6086-4809-B6DF-27E7591F4861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A352FC5B-6086-4809-B6DF-27E7591F4861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E894C3F-40DF-4275-BCEA-31AC0C381C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E894C3F-40DF-4275-BCEA-31AC0C381C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E894C3F-40DF-4275-BCEA-31AC0C381C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E894C3F-40DF-4275-BCEA-31AC0C381C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

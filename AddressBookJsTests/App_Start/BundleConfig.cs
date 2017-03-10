@@ -28,7 +28,7 @@ namespace AddressBookJsTests
                      "~/Content/bootstrap.css",
                      "~/Content/site.css"));
 
-            bundles.Add(new BabelBundle("~/bundles/react").IncludeDirectory("~/Scripts/dependencies/jsx/","*jsx"));
+            bundles.Add(new BabelBundle("~/bundles/react").IncludeDirectory("~/Scripts/dependencies/jsx/","*jsx").Include("~/Scripts/tests/ContactBox-specs.js"));
                 // Add your JSX files here
                 //"~/app/*.jsx"
                 //"~/app/ContactBox.jsx",
