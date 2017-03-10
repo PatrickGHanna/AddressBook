@@ -2,7 +2,7 @@
     //todo: repeated form elements
     render: function() {
         return (
-            <div>
+            <div className="text-left">
                 <input className="hidden"
                        id="id"
                        type="hidden"
